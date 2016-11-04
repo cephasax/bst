@@ -1,0 +1,117 @@
+import java.util.Scanner; 
+
+public class main{
+
+	/**
+	 * @param args
+	 */
+	public static Nodo nodo;
+	public static Nodo raiz;
+	public static int quantidade;
+	public static int opcao;
+	public static int valor;
+	public static BST bst;
+	public static Cadeiras cadeiras;
+	
+	public static void main(String[] args){
+		
+		//Definir número de participantes
+		
+		System.out.println("Digite o número de pessoas");
+		Scanner entrada = new Scanner(System.in);
+		quantidade = Integer.parseInt(entrada.nextLine());
+		
+		//Escolher entrada crescente, decrescente ou aleatória
+		
+		System.out.println("Digite o tipo de geração de números\n"
+							+ "\t1 para CRESCENTE\n"
+							+ "\t2 para DECRESCENTE\n"
+							+ "\t3 para ALEATÓRIA\n");
+		opcao = Integer.parseInt(entrada.nextLine());
+		
+		//Variaveis
+		bst = new BST();
+		int maior = 0;
+		
+		//inserir valores em uma BST e guardar o valor do maior
+		switch(opcao){
+		//Caso crescente
+		case 1:
+			for(int i = 1; i <= quantidade; i++){
+				bst.insert(i);
+				if(i > maior){
+					maior = i;
+					System.out.println(i);
+				}
+			}
+			break;
+		case 2:
+			for(int i = quantidade; i >= 1; i--){
+				bst.insert(i);
+				if(i > maior){
+					maior = i;
+					System.out.println(i);
+				}
+			}
+			break;
+		case 3:
+			for(int i = 0; i < quantidade; i++){
+				
+				bst.insert(valor);
+				while(bst.busca(valor) != null){
+					valor = cadeiras.num_ale();
+				}
+				if(valor > maior){
+					maior = valor;
+				}
+			}
+			break;
+		}//Termino do Switch
+		
+		
+		//Codigo de Cephas
+		int proximo = quantidade;
+		int total = quantidade;
+		int val = 0;
+		
+		/*
+		 * loop com exclusão do próximo, mod para saber nodo a ser excluido
+		 * e retorno a exclusão até restar só um na árvore	
+		 */
+		long tempoInicio = System.currentTimeMillis();  
+		
+		
+		//Primeira eliminação
+		nodo = new Nodo();
+		nodo = bst.busca(maior);
+		val = nodo.getvalor();
+		bst.removeMax();
+		System.out.println("Valor eliminado: "+ val);
+		quantidade--;
+		Nodo aux = new Nodo();
+		int i = 1;
+
+		System.out.println("Valor: " + val);
+
+		
+		//Eliminação em loop
+		while(quantidade > 1){
+			System.out.println("Quantidade: " + quantidade);
+			val = ((val-1) % quantidade) + 1;
+			System.out.println("Valor do proximo: " + val);
+			aux = bst.busca_index(val);
+			bst.remove(val);
+			System.out.println("Removeu o valor: " + aux.getvalor());
+			quantidade--;
+			val = aux.getvalor();
+		}
+		bst.remove(8);
+		
+		bst.printTree();
+		System.out.println("GANHADOR = " + bst.getRoot() +"\n");
+		System.out.println("Tempo gasto: "+(System.currentTimeMillis()-tempoInicio)+"milesegundos");
+
+		entrada.close();
+			
+	}
+}
